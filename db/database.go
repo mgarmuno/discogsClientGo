@@ -39,4 +39,9 @@ func createDatabase() {
 	if err != nil {
 		log.Fatal("Error creating database file", dbDir+fileName, ":", err)
 	}
+	createDBTables(db)
+}
+
+func createDBTables(db *sql.DB) {
+
 }
