@@ -15,7 +15,6 @@ import (
 const (
 	driver      = "sqlite3"
 	fileName    = "discogsDatabase.db"
-	dbDir       = "db/"
 	create      = "CREATE TABLE IF NOT EXISTS "
 	vinyl       = "vinyl"
 	vinylFields = "id integer primary key, title text, artist integer, released integer, genre text, style text"
@@ -34,8 +33,13 @@ func CheckDatabase() {
 	}
 }
 
+// CheckLanguage returns the language setted in the database.
+func CheckLanguage() string {
+	return "en"
+}
+
 func checkDatabaseExists() (bool, error) {
-	_, err := os.Stat("./" + dbDir + fileName)
+	_, err := os.Stat("./" + fileName)
 	if err == nil {
 		return true, nil
 	}
@@ -47,9 +51,9 @@ func checkDatabaseExists() (bool, error) {
 
 func createDatabase() {
 	fmt.Println("Creating database...")
-	db, err := sql.Open(driver, "./"+dbDir+fileName)
+	db, err := sql.Open(driver, "./"+fileName)
 	if err != nil {
-		log.Fatal("Error creating database file", dbDir+fileName, ":", err)
+		log.Fatal("Error creating database file", fileName, ":", err)
 	}
 	fmt.Println("Database created")
 	createDBTables(db)
