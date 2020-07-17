@@ -74,10 +74,8 @@ func createTable(db *sql.DB, model model.Model) {
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Type().Field(i)
 		tag := field.Tag
-
 		fieldName := field.Name
 		fieldTag := tag.Get("sql")
-
 		fields = append(fields, fmt.Sprintln(fieldName, fieldTag))
 	}
 	fieldsString := "(" + strings.Join(fields, ",") + ")"
