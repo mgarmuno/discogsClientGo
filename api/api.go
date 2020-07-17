@@ -43,6 +43,7 @@ func UpdateUserInfo() {
 	if err != nil {
 		log.Println("Error decoding response:", err)
 	}
+
 	fmt.Println("id:", user.DiscogsID)
 	fmt.Println("username:", user.UserName)
 	fmt.Println("profile:", user.ProfileURL)
