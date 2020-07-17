@@ -62,6 +62,8 @@ func createDatabase() {
 func createDBTables(db *sql.DB) {
 	createTable(db, model.Vinyl{})
 	createTable(db, model.Artist{})
+	createTable(db, model.Uris{})
+	createTable(db, model.User{})
 }
 
 func createTable(db *sql.DB, model model.Model) {
