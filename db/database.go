@@ -33,9 +33,13 @@ func CheckDatabase() {
 	}
 }
 
-// CheckLanguage returns the language setted in the database.
-func CheckLanguage() string {
-	return "en"
+// OpenDatabase creates a DB connection
+func OpenDatabase() *sql.DB {
+	db, err := sql.Open(driver, "./"+fileName)
+	if err != nil {
+		log.Fatal("Error opening database file", fileName, ":", err)
+	}
+	return db
 }
 
 func checkDatabaseExists() (bool, error) {
@@ -51,10 +55,7 @@ func checkDatabaseExists() (bool, error) {
 
 func createDatabase() {
 	fmt.Println("Creating database...")
-	db, err := sql.Open(driver, "./"+fileName)
-	if err != nil {
-		log.Fatal("Error creating database file", fileName, ":", err)
-	}
+	db := OpenDatabase()
 	fmt.Println("Database created")
 	createDBTables(db)
 }

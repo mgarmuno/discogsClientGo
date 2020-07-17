@@ -2,11 +2,11 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/mgarmuno/discogsClientGo/db"
 	"github.com/mgarmuno/discogsClientGo/model"
 
 	"github.com/mgarmuno/discogsClientGo/file"
@@ -20,7 +20,6 @@ const (
 
 // UpdateUserInfo updates the user info from Discogs
 func UpdateUserInfo() {
-	fmt.Println("User info request")
 	req, err := http.NewRequest("GET", discogsURL+userInfo, nil)
 	if err != nil {
 		log.Println("Error creating GET HTTP request:", err)
@@ -37,13 +36,13 @@ func UpdateUserInfo() {
 	if err != nil {
 		log.Println("Error reading response:", err)
 	}
-	fmt.Println(string(bodyBytes))
 	var user = new(model.User)
 	err = json.Unmarshal(bodyBytes, &user)
 	if err != nil {
 		log.Println("Error decoding response:", err)
 	}
-	fmt.Println("id:", user.DiscogsID)
-	fmt.Println("username:", user.UserName)
-	fmt.Println("profile:", user.ProfileURL)
+	res := db.InsertUserInfo(user)
+	if !res {
+		log.Println("User info not updated!")
+	}
 }

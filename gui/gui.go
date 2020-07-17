@@ -1,11 +1,14 @@
 package gui
 
 import (
+	"fmt"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
 	"github.com/mgarmuno/discogsClientGo/api"
+	"github.com/mgarmuno/discogsClientGo/db"
 	"github.com/mgarmuno/discogsClientGo/file"
 )
 
@@ -49,7 +52,8 @@ func showMainWindow() {
 	app := app.New()
 	w := app.NewWindow("Hello")
 	box := widget.NewVBox()
-	box.Append(widget.NewLabel("Hello Fyne!"))
+	userName := getUserName()
+	box.Append(widget.NewLabel(fmt.Sprintf("Hello %s!", userName)))
 	addTokenLabel = widget.NewLabel("No Token present, it's necessary for operate with Discogs, please add one with the following button!")
 	addTokenLabel.Hide()
 	addTokenButton = widget.NewButton("Change Token", showAddTokenWindow)
@@ -70,6 +74,14 @@ func showMainWindow() {
 	w.SetContent(box)
 	w.Resize(fyne.NewSize(600, 300))
 	w.ShowAndRun()
+}
+
+func getUserName() string {
+	user := db.GetUserInfo()
+	if user.UserName == "" {
+		return "User"
+	}
+	return user.UserName
 }
 
 func showErrorSavingToken() {
