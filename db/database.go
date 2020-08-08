@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"strings"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 	"github.com/mgarmuno/discogsClientGo/model"
 )
 
