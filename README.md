@@ -1,3 +1,3 @@
 # discogsClientGo
-Client application wirten in Go.
+Client application written in Go.
 Consumes Discogs API.
